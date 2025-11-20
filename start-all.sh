@@ -105,10 +105,10 @@ echo -e "${YELLOW}⚙️ Generando Prisma Client...${NC}"
 npm exec prisma generate
 echo -e "${GREEN}✅ Prisma Client generado${NC}"
 
-# Ejecutar migraciones
-echo -e "${YELLOW}⚙️ Ejecutando migraciones de base de datos...${NC}"
-npm exec prisma migrate deploy
-echo -e "${GREEN}✅ Migraciones ejecutadas${NC}"
+# Ejecutar migraciones (usando db push para SQLite)
+echo -e "${YELLOW}⚙️ Configurando base de datos SQLite...${NC}"
+npm exec prisma db push --accept-data-loss
+echo -e "${GREEN}✅ Base de datos configurada${NC}"
 
 echo ""
 
