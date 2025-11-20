@@ -102,12 +102,12 @@ fi
 
 # Generar Prisma Client
 echo -e "${YELLOW}⚙️ Generando Prisma Client...${NC}"
-npx prisma generate
+npm exec prisma generate
 echo -e "${GREEN}✅ Prisma Client generado${NC}"
 
 # Ejecutar migraciones
 echo -e "${YELLOW}⚙️ Ejecutando migraciones de base de datos...${NC}"
-npx prisma migrate deploy
+npm exec prisma migrate deploy
 echo -e "${GREEN}✅ Migraciones ejecutadas${NC}"
 
 echo ""
