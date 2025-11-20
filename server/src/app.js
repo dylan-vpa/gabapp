@@ -9,16 +9,32 @@ const PORT = process.env.PORT || 3000;
 
 // Configuración de CORS para RunPod
 const corsOptions = {
-  origin: [
-    'https://7lxtqv697gvl9l-3000.proxy.runpod.net',
-    'http://localhost:5173',
-    'http://localhost:3000'
-  ],
+  origin: function (origin, callback) {
+    const allowedOrigins = [
+      'https://7lxtqv697gvl9l-3000.proxy.runpod.net',
+      'http://localhost:5173',
+      'http://localhost:3000'
+    ];
+
+    // Permitir requests sin origin (como Postman, curl, etc.)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(null, false);
+    }
+  },
   credentials: true,
-  optionsSuccessStatus: 200
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  exposedHeaders: ['Content-Type', 'Authorization'],
+  optionsSuccessStatus: 200,
+  preflightContinue: false
 };
 
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Manejar preflight requests
 app.use(express.json());
 
 app.get('/', (req, res) => {
