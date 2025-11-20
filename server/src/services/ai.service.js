@@ -1,6 +1,15 @@
 const axios = require('axios');
 
-const OLLAMA_HOST = process.env.OLLAMA_HOST || 'http://localhost:11434';
+// Asegurar que OLLAMA_HOST tenga el protocolo correcto
+let OLLAMA_HOST = process.env.OLLAMA_HOST || 'http://localhost:11434';
+
+// Normalizar la URL si no tiene protocolo
+if (!OLLAMA_HOST.startsWith('http://') && !OLLAMA_HOST.startsWith('https://')) {
+  OLLAMA_HOST = `http://${OLLAMA_HOST}`;
+}
+
+// Remover slash final si existe
+OLLAMA_HOST = OLLAMA_HOST.replace(/\/$/, '');
 
 const generateGoalPlan = async (mainGoal) => {
   const prompt = `You are a helpful assistant that breaks down goals into actionable steps.
